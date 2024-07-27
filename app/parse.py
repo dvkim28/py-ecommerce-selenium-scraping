@@ -95,7 +95,7 @@ def get_full_content_page(driver: webdriver.Chrome, url: str) -> str:
         cookie_button = driver.find_element(By.CLASS_NAME, "acceptCookies")
         cookie_button.click()
     except NoSuchElementException:
-        pass  # Кнопка может отсутствовать
+        pass
 
     while True:
         try:
@@ -109,7 +109,7 @@ def get_full_content_page(driver: webdriver.Chrome, url: str) -> str:
                     (ActionChains(driver)
                      .move_to_element(button).click().perform())
                 except Exception as e:
-                    print(f"Ошибка при клике на кнопку: {e}")
+                    print(f"Error: {e}")
                     break
             else:
                 break
