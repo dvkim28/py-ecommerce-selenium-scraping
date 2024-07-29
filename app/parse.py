@@ -26,7 +26,7 @@ class Product:
 
 
 def write_goods_to_csv(goods: List[Product], file_name: str) -> None:
-    with open(f"{file_name}.csv", "w", newline="", encoding="utf-8") as file:
+    with open(f"{file_name}.csv", "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(["title",
                          "description",
@@ -69,7 +69,8 @@ def get_product_rating(soup: BeautifulSoup) -> int:
 def parse_single_home_product(product_html: str) -> Product:
     soup = BeautifulSoup(str(product_html), "html.parser")
     title = soup.select_one(".title")["title"]
-    description = soup.select_one(".card-text").text.strip()
+    description = (soup.select_one(".card-text")
+                   .text.strip().replace("\xa0", " "))
     price = float(soup.select_one(".price").text[1:])
     review_tag = soup.select_one(".review-count")
     num_of_reviews = int(review_tag.get_text(strip=True).split()[0])
